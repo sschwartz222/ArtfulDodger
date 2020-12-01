@@ -39,8 +39,8 @@ The code is split into five components:
 * MainActivity sets up the basic view with the toolbar, info button, score texts, and playfield
 * GameThread constantly refreshes per the set target FPS (frames per second) and can be paused by setting 'is_running' to false
 * GameView handles all game logic:
-    *it starts off by establishing the drawing surface and grabbing the score TextViews for later updating
-    *the 
+    1. it starts off by establishing the drawing surface and grabbing the score TextViews for later updating
+    2. the 
  
 
 ## Looking Forward
