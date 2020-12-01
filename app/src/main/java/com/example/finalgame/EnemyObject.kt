@@ -29,6 +29,9 @@ class EnemyObject(i: Bitmap, sz: Rect) {
         canvas.drawBitmap(image, x.toFloat(), y.toFloat(), null)
     }
 
+    //sets the bounds of the play area based on canvas size and causes direction to reverse
+    //upon hitting a wall; moves object based on both x and y velocity, which are initialized
+    //to random ints between 30 and -30
     fun update() {
         if (x > screenWidth - (image.width*1.1) || x < 1) {
             xVelocity *= -1

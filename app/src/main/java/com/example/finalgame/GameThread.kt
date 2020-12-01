@@ -8,7 +8,8 @@ class GameThread(private val surfaceHolder: SurfaceHolder,
 
     private var running: Boolean = false
 
-    private val targetFPS = 30 // frames per second
+    //frames per second
+    private val targetFPS = 30
 
     fun setRunning(isRunning: Boolean) {
         this.running = isRunning
@@ -25,6 +26,7 @@ class GameThread(private val surfaceHolder: SurfaceHolder,
             canvas = null
 
             try {
+                //locking the canvas provides a surface upon which we can draw
                 canvas = this.surfaceHolder.lockCanvas()
                 synchronized(surfaceHolder) {
                     this.gameView.update()
@@ -35,6 +37,7 @@ class GameThread(private val surfaceHolder: SurfaceHolder,
             } finally {
                 if (canvas != null) {
                     try {
+                        //canvas must be unlocked after drawing the desired frame
                         surfaceHolder.unlockCanvasAndPost(canvas)
                     } catch (e: Exception) {
                         e.printStackTrace()

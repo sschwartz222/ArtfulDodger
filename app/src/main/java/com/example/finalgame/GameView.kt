@@ -44,6 +44,9 @@ class GameView(context: Context, attributes: AttributeSet) :
         thread = GameThread(holder, this)
     }
 
+    //initializes game settings--resets variables and schedules enemy spawner; spawner will
+    //not start spawning enemies until the game is spawner variable is set to true after
+    //the game is started in the update() function
     private fun startGame() {
         started = false
         spawner = false
@@ -63,6 +66,10 @@ class GameView(context: Context, attributes: AttributeSet) :
 
         thread.setRunning(true)
     }
+
+    //pauses the game thread and cancels the enemy spawn scheduler, then calls startGame to
+    //reinitialize game settings; also updates high score if appropriate and creates a toast
+    //to display the player's score
     private fun endGame() {
         Toast.makeText(context, context.getString(R.string.end_score, cScore),
             Toast.LENGTH_LONG).show()
@@ -73,11 +80,15 @@ class GameView(context: Context, attributes: AttributeSet) :
         startGame()
     }
 
+    //adds an enemy object to the enemies list
     private fun createEnemy(surfaceSize: Rect) {
         enemies.add(EnemyObject(BitmapFactory.decodeResource(resources, R.drawable.grenade),
             surfaceSize))
     }
 
+    //when the surface is first created, the text views of current score and high score are
+    //stored for future updating; the surfaceSize is also captured for the purpose of initializing
+    //player and enemy start positions, as well as the bounds of the frame
     override fun surfaceCreated(surfaceHolder: SurfaceHolder) {
         tvCurrentScore = (context as Activity).findViewById(R.id.currentScore)
         tvCurrentScore.text = context.getString(R.string.current_score, cScore)
@@ -107,6 +118,11 @@ class GameView(context: Context, attributes: AttributeSet) :
         }
     }
 
+    //updates the game state if (started) is true (set to true in onTouchEvent function upon
+    //player interaction); the player position will update if the person playing is touching the
+    //screen, the entire list of enemies will always update; each enemy will check for collisions
+    //with the player, although this could probably be made more efficient in the future by only
+    //checking hitboxes of enemies in the quadrant the player is in, for example
     fun update() {
         if (started) {
 
@@ -141,13 +157,16 @@ class GameView(context: Context, attributes: AttributeSet) :
                     enemy.image = BitmapFactory.decodeResource(resources, R.drawable.explosion)
                     player!!.image = BitmapFactory.decodeResource(resources, R.drawable.playersad)
 
+                    //endGame must be called through a handler with access to the main UI
+                    //since it prompts a toast to be created and displayed
                     val end = object:  Handler(Looper.getMainLooper()){}
                     end.post {
                         endGame()
                     }
                 }
             }
-
+            //updating the score must also be done through a handler since it alters the UI
+            //created and controlled by the main activity
             val updateScore = object:  Handler(Looper.getMainLooper()){}
             updateScore.post(runnable {
                 tvCurrentScore.text = context.getString(R.string.current_score, cScore)
@@ -165,6 +184,11 @@ class GameView(context: Context, attributes: AttributeSet) :
         }
     }
 
+    //tracks player touch/click actions; of note are action.down and action.up:
+    //action.down is the only one that can start a game so the game will be paused after
+    //each playthrough until a down-touch is registered to begin the new game
+    //action.up also calls endGame since removing one's finger or click from the screen
+    //is a condition of defeat
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         touchedX = event.x.toInt()
@@ -186,6 +210,7 @@ class GameView(context: Context, attributes: AttributeSet) :
         return true
     }
 
+    //used in updateScore
     private inline fun runnable(crossinline body: Runnable.() -> Unit) = object : Runnable {
         override fun run() = body()
     }

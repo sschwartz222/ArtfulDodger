@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    //handler for toolbar action buttons
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.info -> {
             showInfo()
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //handles dialog that appears when pressing "info" button
     private fun showInfo() {
         val dialogTitle = getString(R.string.aboutTitle)
         val dialogMessage = getString(R.string.aboutMessage)
