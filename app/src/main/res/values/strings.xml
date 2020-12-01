@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Artful Dodger</string>
+    <string name="current_score">Current Score: %1$d</string>
+    <string name="end_score">You scored %1$d points!</string>
+    <string name="high_score">High Score: %1$d</string>
+    <string name="info">Info</string>
+    <string name="aboutTitle">Rules</string>
+    <string name="aboutMessage">The goal of the game is to dodge the grenades. The player character
+    (the smiley face) is controlled by touch/mouse input. Pressing down or clicking will begin the
+    game, and colliding with a grenade or lifting the mouse/touch input will end it. A grenade will
+    spawn every 5 seconds at the top left of the screen with a random velocity, and will remain
+    bouncing around the screen until the game is over.</string>
+</resources>
