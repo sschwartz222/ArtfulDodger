@@ -1,4 +1,4 @@
-# MobileSoftwareDevFinalGame
+# Artful Dodger
 
 My final project for Mobile Software Development is a self-proposed game project titled Artful Dodger. 
 The basic premise of the game is that the player object (represented by a smiley face) must avoid colliding with any of the increasing number of bouncing projectiles generated on the screen. The player must also not lift their finger (or mouse click if using an emulator) after starting the game. Score is based on the number of projectiles on the screen when defeat occurs, tracked by both a current score text and high score text.
